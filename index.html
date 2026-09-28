@@ -221,4 +221,61 @@
                 urlapi += `&country=${kodeNegara}`;
             }
 
-           
+            $.ajax({
+                url: urlapi,
+                method: "GET",
+                success: function(data) {
+                    console.log("Data API:", data);
+
+                    if (data.features && data.features.length > 0) {
+                        $("#errorMessage").hide();
+                        
+                        const feature = data.features[0];
+                        const context = feature.context || [];
+
+                        // 1. Koordinat [Longitude, Latitude]
+                        const [lon, lat] = feature.center;
+
+                        // 2. Ekstraksi Informasi Lokasi
+                        let kecamatan = context.find(c => c.id.startsWith("subdistrict") || c.id.startsWith("neighborhood") || c.id.startsWith("locality"))?.text || feature.text || "-";
+                        let lokasiKota = feature.matching_text || feature.text || "-";
+                        let provinsi = context.find(c => c.id.startsWith("region") || c.id.startsWith("province"))?.text || "-";
+                        let negara = context.find(c => c.id.startsWith("country"))?.text || "-";
+
+                        // 3. Tampilkan ke HTML
+                        $("#kecamatan").text(kecamatan);
+                        $("#lokasi").text(lokasiKota);
+                        $("#provinsi").text(provinsi);
+                        $("#negara").text(negara);
+                        $("#longitude").text(lon);
+                        $("#latitude").text(lat);
+                    } else {
+                        $("#errorMessage").show();
+                    }
+                },
+                error: function(error) {
+                    console.log("Error Fetching Data:", error);
+                    $("#errorMessage").text("Gagal mengambil data dari server.").show();
+                }
+            });
+        }
+
+        // Jalankan pencarian saat pertama kali dimuat
+        $(document).ready(function() {
+            cariLokasi();
+
+            // Event listener saat tombol cari diklik
+            $("#btnCari").click(function() {
+                cariLokasi();
+            });
+
+            // Event listener tekan 'Enter' di input text
+            $("#inputKota").keypress(function(e) {
+                if (e.which === 13) {
+                    cariLokasi();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
