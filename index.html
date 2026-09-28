@@ -202,4 +202,23 @@
         </div>
     </div>
 
-   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        const apiKey = "OPtSSe7KN7yV44mARFrz";
+
+        function cariLokasi() {
+            const queryKota = $("#inputKota").val().trim();
+            const kodeNegara = $("#inputNegara").val();
+
+            if (!queryKota) {
+                alert("Silakan masukkan nama kota terlebih dahulu.");
+                return;
+            }
+
+            // Parameter `country` digunakan jika negara dipilih
+            let urlapi = `https://api.maptiler.com/geocoding/${encodeURIComponent(queryKota)}.json?key=${apiKey}`;
+            if (kodeNegara) {
+                urlapi += `&country=${kodeNegara}`;
+            }
+
+           
