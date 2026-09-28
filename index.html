@@ -138,4 +138,34 @@
             margin-bottom: 1rem;
             display: none;
         }
-    
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="user-info">
+            <h3>Nama : <span>firmansyah</span></h3>
+            <h3>NIM : <span>20240240013</span></h3>
+        </div>
+
+        <!-- Form Pencarian Kota & Negara -->
+        <div class="search-box">
+            <select id="inputNegara" class="input-control">
+                <option value="">-- Semua Negara --</option>
+                <option value="id" selected>Indonesia (ID)</option>
+                <option value="us">Amerika Serikat (US)</option>
+                <option value="jp">Jepang (JP)</option>
+                <option value="my">Malaysia (MY)</option>
+                <option value="sg">Singapura (SG)</option>
+                <option value="gb">Inggris / UK (GB)</option>
+            </select>
+            
+            <div class="search-row">
+                <input type="text" id="inputKota" class="input-control" placeholder="Masukkan nama kota/lokasi..." value="Jakarta">
+                <button id="btnCari" class="btn-search">Cari</button>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="error-message">Lokasi tidak ditemukan. Coba kata kunci lain.</div>
+
+        
